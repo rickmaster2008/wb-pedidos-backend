@@ -16,8 +16,7 @@ use Illuminate\Http\Request;
 Route::post('login', 'API\UserController@login');
 Route::post('register', 'API\UserController@register');
 
-Route::group(['middleware' => ['auth:api', 'cors']], function ()
-{
+Route::group(['middleware' => ['auth:api', 'cors']], function () {
     Route::get('articulos', 'API\ArticuloController@index');
     Route::get('articulos/{search}', 'API\ArticuloController@show');
     Route::get('clientes', 'API\CcmcliController@index');
@@ -28,6 +27,7 @@ Route::group(['middleware' => ['auth:api', 'cors']], function ()
     Route::post('historial', 'API\CabpeController@show');
     Route::get('detped/{mnserie}/{mnroped}', 'API\DetpeController@show');
     Route::get('ccmtrs', 'API\CcmtrsController@index');
-    Route::get('ccmcpa/{tipo}'. 'API\CcmcpaController@show');
+    Route::get('ccmcpa/{tipo}' . 'API\CcmcpaController@show');
     Route::post('cambiar', 'API\CcmcpaController@update');
+    Route::get('mainView/{nombre}', 'API\MainViewController@index');
 });

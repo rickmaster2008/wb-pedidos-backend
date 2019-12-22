@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Models\Ccmven;
 use Illuminate\Support\Facades\Auth;
-use Validator;
+use Illuminate\Validation\Validator as Validator;
 
 class UserController extends Controller
 {
@@ -52,6 +52,7 @@ class UserController extends Controller
       'password' => 'required',
       'c_password' => 'required|same:password',
     ]);
+
     if ($validator->fails()) {
       return response()->json(['error' => $validator->errors()], 401);
     }

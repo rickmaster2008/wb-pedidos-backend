@@ -35,9 +35,7 @@ class CabpeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-
-    }
+    { }
 
     /**
      * Store a newly created resource in storage.
@@ -68,10 +66,10 @@ class CabpeController extends Controller
 
         function nroped($numero)
         {
-            $n = (int)$numero + 1;
-            $n = (string)$n;
+            $n = (int) $numero + 1;
+            $n = (string) $n;
             while (strlen($n) < 6) {
-                $n = '0'.$n;
+                $n = '0' . $n;
             }
             return $n;
         }
@@ -136,12 +134,12 @@ class CabpeController extends Controller
             $mprecio = round($value['precio'] * 1.18, 2);
             $mpordct1 = $value['mpordfa'] != null ? $value['mpordfa'] : 0.000;
             $mvalven = round($mprecio * $value['cantidad'], 2);
-            $mdcto = round($mvalven * ($mpordct1/100), 2);
+            $mdcto = round($mvalven * ($mpordct1 / 100), 2);
             $migv = round(($mvalven - $mdcto) - (($mvalven - $mdcto) / 1.18), 2);
             $mdetped = array(
                 'MTIPODOC' => 'C',
                 'MNSERIE' => $ccmsedo['MNSERIE'],
-                'MNROPED' => '0'.(string)((int)$cabpe['MNROPED'] + 1),
+                'MNROPED' => '0' . (string) ((int) $cabpe['MNROPED'] + 1),
                 'MITEM' => (string) $mitem,
                 'MCODART' => $value['mcodart'],
                 'MCANTIDAD' => (float) $value['cantidad'],
@@ -174,38 +172,40 @@ class CabpeController extends Controller
             $det['MDESCRIP'] = $mdescrip;
             array_push($articulos, $det);
         }
+        if ($request->input('enviarCorreo')) {
+            $data = array('nombre' => $ccmcli['MNOMBRE'], 'mtopventa' => round($mtopventa, 2), 'pedidos' => array());
 
-        $data = array('nombre' => $ccmcli['MNOMBRE'], 'mtopventa' => round($mtopventa, 2), 'pedidos' => array());
-        
-        foreach ($request->input('pedidos') as $pedido) {
-            array_push($data['pedidos'], $pedido);
+            foreach ($request->input('pedidos') as $pedido) {
+                array_push($data['pedidos'], $pedido);
+            }
+
+            $ccmcpa = Ccmcpa::where('MCONDPAGO', '=', $request->input('mcondpago'))->first();
+
+            $info = [
+                'fecha' => date('d/m/Y'),
+                'periodo' => date('Y/m'),
+                'mnroped' => $ccmsedo['MNSERIE'] . '-' . $mnroped,
+                'mcodven' => $request->input('mcodven'),
+                'ruc' => $ccmcli['MCODCLI'],
+                'cliente' => $ccmcli['MNOMBRE'],
+                'canal' => $ccmcli['MCODCADI'],
+                'direccion' => $ccmcli['MDIRECC'],
+                'email' => $ccmcli['MCORREO'],
+                'condicion' => $ccmcpa['MABREVI'],
+                'articulos' => $articulos,
+                'total' => round($mneto, 2),
+                'observaciones' => $request->input('observaciones')
+            ];
+            PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'debugPng' => true, 'defaultFont' => 'sans-serif']);
+            $document = PDF::loadView('attach.pedido', $info);
+            $output = $document->output();
+
+            Mail::send('emails.mail', $data, function ($message) use ($ccmcli, $output) {
+                $message->to('rcotillo@cotillo.tech', $ccmcli['MNOMBRE'])->subject('Pedido en proceso');
+                $message->from('recep_pedidos@filtroswillybusch.com.pe', 'Filtros Willy Busch');
+                $message->attachData($output, 'pedido.pdf');
+            });
         }
-
-        $ccmcpa = Ccmcpa::where('MCONDPAGO', '=', $request->input('mcondpago'))->first();
-
-        $info = [
-            'fecha' => date('d/m/Y'),
-            'periodo' => date('Y/m'),
-            'mnroped' => $ccmsedo['MNSERIE'].'-'.$mnroped,
-            'mcodven' => $request->input('mcodven'), 
-            'ruc' => $ccmcli['MCODCLI'],
-            'cliente' => $ccmcli['MNOMBRE'],
-            'canal' => $ccmcli['MCODCADI'],
-            'direccion' => $ccmcli['MDIRECC'],
-            'email' => $ccmcli['MCORREO'],
-            'condicion' => $ccmcpa['MABREVI'],
-            'articulos' => $articulos,
-            'total' => round($mneto, 2),
-        ];
-        PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'debugPng' => true, 'defaultFont' => 'sans-serif']);
-        $document = PDF::loadView('attach.pedido', $info);
-        $output = $document->output();
-
-        Mail::send('emails.mail', $data, function ($message) use ($ccmcli, $output) {
-            $message->to('rcotillo@cotillo.tech', $ccmcli['MNOMBRE'])->subject('Pedido en proceso');
-            $message->from('recep_pedidos@filtroswillybusch.com.pe', 'Filtros Willy Busch');
-            $message->attachData($output, 'pedido.pdf');
-        });
 
         return response()->json(200);
     }

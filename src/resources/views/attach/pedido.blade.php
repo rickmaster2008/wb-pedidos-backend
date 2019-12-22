@@ -165,7 +165,7 @@
 	<tr>
     <td colspan="2" height="10" align="left" valign=middle><b><font color="#000000">Observaciones</font></b></td>
     <td colspan="1" height="10" align="left" valign=middle><b>:</b></td>
-		<td colspan="8" align="left" valign=middle><br></td>
+	<td colspan="8" align="left" valign=middle><b><font color="#2E75B6">{{$observaciones}}</font></b></td>
 		<td align="left" valign=bottom><br></td>
 		<td align="left" valign=bottom><br></td>
 		<td align="left" valign=bottom bgcolor="#FFFFFF"><font color="#FFFFFF"><br></font></td>
