@@ -39,6 +39,7 @@
 </head>
 
 <body>
+	{{-- <img src="http://filtroswillybusch.com.pe/aplicativo/img/wb.png" width="121" height="97" id="logo"> --}}
   <img src="http://localhost:8080/img/wb.png" width="121" height="97" id="logo">
 <table cellspacing="0" border="0">
 	<tr>
