@@ -92,7 +92,7 @@ class CabpeController extends Controller
                 'MPERIODO' => date('Ym'),
                 'MCODCLI' => $cabe['MCODCLI'],
                 'MCODCADI' => $ccmcli['MCODCADI'],
-                'MCODCPA' => $cabe['MCONDPAGO'],
+                'MCODCPA' => $request->input('MCONDPAGO'),
                 'MCODVEN' => $cabe['MCODVEN'],
                 'MCODZON' => $ccmcli['MCODZON'],
                 'MCODMON' => '001',
@@ -187,7 +187,7 @@ class CabpeController extends Controller
             $data = array('nombre' => $ccmcli['MNOMBRE']);
 
 
-            $ccmcpa = Ccmcpa::where('MCONDPAGO', '=', $request->input('mcondpago'))->first();
+            $ccmcpa = Ccmcpa::where('MCONDPAGO', '=', $request->input('MCONDPAGO'))->first();
 
             $info = [
                 'fecha' => date('d/m/Y'),
