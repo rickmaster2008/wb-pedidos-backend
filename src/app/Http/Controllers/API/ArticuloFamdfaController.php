@@ -21,7 +21,6 @@ class ArticuloFamdfaController extends Controller
         $artdfas = ArticuloFamdfa::where('mcodart', $req['mcodart'])->orWhere('mcodart', '')->get();
         $ccmcli = Ccmcli::where('MCODCLI', $req['mcodcli'])->first();
         $ccmzon = Ccmzon::where('MCODZON', $ccmcli['MCODZON'])->first();
-
         foreach ($artdfas as $ndfa) {
             $dfa = Famdfa::where('MCODDFA', $ndfa['mcoddfa'])->first();
             $ndfa['descuento'] = $dfa;

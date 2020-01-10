@@ -149,7 +149,7 @@
 	<tr>
     <td colspan="2" height="10" align="left" valign=middle><b><font color="#000000">Agencia de transp.</font></b></td>
     <td colspan="1" height="10" align="left" valign=middle><b>:</b></td>
-		<td colspan="8" align="left" valign=middle><br></td>
+	<td colspan="8" align="left" valign=middle><b><font color="#2E75B6">{{$transporte}}</font></b></td>
 		<td align="left" valign=bottom><br></td>
 		<td align="left" valign=bottom><br></td>
 		<td align="left" valign=bottom bgcolor="#FFFFFF"><font color="#FFFFFF"><br></font></td>
@@ -174,50 +174,50 @@
       <td><br></td>
     </tr>
 	@foreach ($articulos as $key => $value)
-	@if (count($value) > 0)
-	<tr>
-		<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="14" height="15" align="center" valign=middle bgcolor="#9DC3E6"><b>{{$key}}</b></td>
-  </tr>
-  <tr>
-	  <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" height="15" align="center" valign=middle bgcolor="#9DC3E6"><b>CODIGO WB</b></td>
-	  <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" align="center" valign=middle bgcolor="#9DC3E6"><b>DESCRIPCION</b></td>
-	  <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign=middle bgcolor="#9DC3E6"><b>CANTIDAD</b></td>
-	  <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="1" align="center" valign=middle bgcolor="#9DC3E6"><b>P. UNIT. </b></td>
-	  <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="3" align="center" valign=middle bgcolor="#9DC3E6"><b>DESCUENTO  %</b></td>
-	  <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign=middle bgcolor="#9DC3E6"><b>TOTAL</b></td>
-</tr>
-	  @foreach ($value as $v)
-	  @if ($v['MCODDFA'] != 'Bono')
-	  <tr>
-		  <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign=bottom>{{$v['MCODART']}}</td>
-		  <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" align="left" valign=bottom><b>{{$v['MDESCRI01']}}</b></td>
-		  <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="right" valign=bottom sdval="10" sdnum="1033;"><b>{{$v['MCANTIDAD']}}</b></td>
-		  <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="1" align="right" valign=bottom sdval="144.923184" sdnum="1033;0;0.00_ ;[RED]-0.00 ">
-		{{number_format($v['MPRECIO'], 2, '.', '')}}
-		  </td>
-		  <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="3" align="left" valign=bottom>{{$v['MDESCRIP']}}</td>
-	  <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="right" valign=bottom sdval="1449.23184" sdnum="1033;0;0.00_ ;[RED]-0.00 ">
-		<b>
-		  {{number_format($v['MVALVEN'] - $v['MDCTO'], 2, '.', '')}}
-		</b>
-	  </td>
-	  </tr>
-	  @else
-	  <tr>
-		  <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign=bottom>{{$v['MCODART']}}</td>
-		  <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" align="left" valign=bottom><b>{{$v['MDESCRI01']}}</b></td>
-		  <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="right" valign=bottom sdval="10" sdnum="1033;"><b>{{$v['MCANTIDAD']}}</b></td>
-		  <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="1" align="right" valign=bottom sdval="144.923184" sdnum="1033;0;0.00_ ;[RED]-0.00 ">0.00</td>
-		  <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="3" align="left" valign=bottom></td>
-	  <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="right" valign=bottom sdval="1449.23184" sdnum="1033;0;0.00_ ;[RED]-0.00 ">
-		<b>
-		  0.00
-		</b>
-	  </td>
-	  </tr>
-	  @endif
-	  @endforeach
-	@endif
+		@if (count($value) > 0)
+			<tr>
+				<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="14" height="15" align="center" valign=middle bgcolor="#9DC3E6"><b>{{$key}}</b></td>
+			</tr>
+			<tr>
+				<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" height="15" align="center" valign=middle bgcolor="#9DC3E6"><b>CODIGO WB</b></td>
+				<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" align="center" valign=middle bgcolor="#9DC3E6"><b>DESCRIPCION</b></td>
+				<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign=middle bgcolor="#9DC3E6"><b>CANTIDAD</b></td>
+				<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="1" align="center" valign=middle bgcolor="#9DC3E6"><b>P. UNIT. </b></td>
+				<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="3" align="center" valign=middle bgcolor="#9DC3E6"><b>DESCUENTO  %</b></td>
+				<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="center" valign=middle bgcolor="#9DC3E6"><b>TOTAL</b></td>
+			</tr>
+			@foreach ($value as $v)
+				@if ($v['MCODDFA'] != 'Bono')
+				<tr>
+					<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign=bottom>{{$v['MCODART']}}</td>
+					<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" align="left" valign=bottom><b>{{$v['MDESCRI01']}}</b></td>
+					<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="right" valign=bottom sdval="10" sdnum="1033;"><b>{{$v['MCANTIDAD']}}</b></td>
+					<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="1" align="right" valign=bottom sdval="144.923184" sdnum="1033;0;0.00_ ;[RED]-0.00 ">
+					{{number_format($v['MPRECIO'], 2, '.', '')}}
+					</td>
+					<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="3" align="left" valign=bottom>{{$v['MDESCRIP']}}</td>
+				<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="right" valign=bottom sdval="1449.23184" sdnum="1033;0;0.00_ ;[RED]-0.00 ">
+					<b>
+					{{number_format($v['MVALVEN'] - $v['MDCTO'], 2, '.', '')}}
+					</b>
+				</td>
+				</tr>
+				@else
+				<tr>
+					<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="left" valign=bottom>{{$v['MCODART']}}</td>
+					<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="4" align="left" valign=bottom><b>{{$v['MDESCRI01']}}</b></td>
+					<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="right" valign=bottom sdval="10" sdnum="1033;"><b>{{$v['MCANTIDAD']}}</b></td>
+					<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="1" align="right" valign=bottom sdval="144.923184" sdnum="1033;0;0.00_ ;[RED]-0.00 ">0.00</td>
+					<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="3" align="left" valign=bottom></td>
+				<td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000" colspan="2" align="right" valign=bottom sdval="1449.23184" sdnum="1033;0;0.00_ ;[RED]-0.00 ">
+					<b>
+					0.00
+					</b>
+				</td>
+				</tr>
+				@endif
+			@endforeach
+		@endif
 	@endforeach
 	<tr>
 		<td height="12" align="left" valign=bottom><br></td>

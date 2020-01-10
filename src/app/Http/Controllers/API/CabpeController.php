@@ -201,7 +201,8 @@ class CabpeController extends Controller
                 'condicion' => $ccmcpa['MABREVI'],
                 'articulos' => $articulos,
                 'total' => round($montoTotalFinal, 2),
-                'observaciones' => $request->input('observaciones')
+                'observaciones' => $request->input('observaciones'),
+                'transporte' => $request->input('transporte')
             ];
 
             PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'debugPng' => true, 'defaultFont' => 'sans-serif']);
