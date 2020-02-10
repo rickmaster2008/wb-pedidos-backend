@@ -57,7 +57,7 @@ services:
       PMA_ARBITRARY: 1
     restart: unless-stopped
     volumes:
-      - dbda
+      - dbdata
     networks: 
       - laravel
     ports:

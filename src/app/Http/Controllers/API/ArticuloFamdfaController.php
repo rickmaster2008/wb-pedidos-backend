@@ -18,7 +18,7 @@ class ArticuloFamdfaController extends Controller
      */
     public function index(Request $req)
     {   
-        $artdfas = ArticuloFamdfa::where('mcodart', $req['mcodart'])->orWhere('mcodart', '')->get();
+        $artdfas = ArticuloFamdfa::where('mcodart', $req['mcodart'])->orWhere('mcodart', '')->orWhere('mcodart', NULL)->get();
         $ccmcli = Ccmcli::where('MCODCLI', $req['mcodcli'])->first();
         $ccmzon = Ccmzon::where('MCODZON', $ccmcli['MCODZON'])->first();
         foreach ($artdfas as $ndfa) {

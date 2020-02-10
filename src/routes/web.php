@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,7 +17,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/hojavendedora', function() {
-	return view('index');
+	return response()->json(['data' => 'data'], 200);
 });
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('table-list', function () {
