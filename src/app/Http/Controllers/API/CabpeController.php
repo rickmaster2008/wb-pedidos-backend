@@ -181,10 +181,8 @@ class CabpeController extends Controller
                 array_push($articulos[$key], $det);
             }
         }
-        info($request->input('enviarCorreo'));
         
-        if ($request->input('enviarCorreo')) {
-            $data = array('nombre' => $ccmcli['MNOMBRE']);
+        $data = array('nombre' => $ccmcli['MNOMBRE']);
 
 
             $ccmcpa = Ccmcpa::where('MCONDPAGO', '=', $request->input('MCONDPAGO'))->first();
@@ -204,17 +202,30 @@ class CabpeController extends Controller
                 'observaciones' => $request->input('observaciones'),
                 'transporte' => $request->input('transporte')
             ];
-
+            
             PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'debugPng' => true, 'defaultFont' => 'sans-serif']);
             $document = PDF::loadView('attach.pedido', $info);
             $output = $document->output();
-
+        
+        if ($request->input('enviarCorreo') && $ccmcli['MCORREO'] != NULL) {
             Mail::send('emails.mail', $data, function ($message) use ($ccmcli, $output) {
-                $message->to('rcotillo@cotillo.tech', $ccmcli['MNOMBRE'])->subject('Pedido en proceso');
+                $message->to('dacharte@willybusch.com.pe', $ccmcli['MNOMBRE'])->subject('Pedido en proceso');
                 $message->from('recep_pedidos@filtroswillybusch.com.pe', 'Filtros Willy Busch');
                 $message->attachData($output, 'pedido.pdf');
             });
         }
+        
+        Mail::send('emails.mail', $data, function ($message) use ($ccmcli, $output) {
+                $message->to('recep_pedidos@filtroswillybusch.com.pe', $ccmcli['MNOMBRE'])->subject('Pedido en proceso');
+                $message->from('recep_pedidos@filtroswillybusch.com.pe', 'Filtros Willy Busch');
+                $message->attachData($output, 'pedido.pdf');
+            });
+        
+        Mail::send('emails.mail', $data, function ($message) use ($ccmcli, $output) {
+                $message->to($request->input('vendedorEmail'), $ccmcli['MNOMBRE'])->subject('Pedido en proceso');
+                $message->from('recep_pedidos@filtroswillybusch.com.pe', 'Filtros Willy Busch');
+                $message->attachData($output, 'pedido.pdf');
+            });
 
         return response()->json(201);
     }
