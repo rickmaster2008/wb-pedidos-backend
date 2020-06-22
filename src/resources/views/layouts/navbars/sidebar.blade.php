@@ -35,6 +35,12 @@
           <p>{{ __('VENDEDORES') }}</p>
         </a>
       </li>
+      <li class="nav-item{{ request()->is('pdfviewer') ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('pdfviewer') }}">
+          <i class="material-icons">picture_as_pdf</i>
+          <p>{{ __('PDF Viewer') }}</p>
+        </a>
+      </li>
     </ul>
   </div>
 </div>

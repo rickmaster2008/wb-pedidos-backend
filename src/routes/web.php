@@ -54,6 +54,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('ccmven', 'CcmvenController@index')->name('ccmven');
 	Route::put('cabped/{id}', 'CabpeController@update')->name('update_cabpe');
 	Route::post('email/{mnserie}/{mnroped}', 'CabpeController@email')->name('enviar_email');
+	Route::get('pdfviewer', 'PdfViewerController@create')->name('pdfviewer');
+	Route::post('pdfviewer/store', 'PdfViewerController@store')->name('pdfviewer-store');
 });
 
 Route::group(['middleware' => 'auth'], function () {
