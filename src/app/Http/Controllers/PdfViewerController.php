@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\PdfViewer;
 use Illuminate\Http\Request;
 use Spatie\PdfToImage\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 class PdfViewerController extends Controller
 {
@@ -36,17 +37,60 @@ class PdfViewerController extends Controller
      */
     public function store(Request $request)
     {
+        // set_time_limit(300);
+        // $pdf_file = $request->file('pdf');
+        // if ($pdf_file) {
+        //     $pdf = new Pdf($pdf_file);
+        //     $pages = $pdf->getNumberOfPages();
+        //     $files = Storage::allFiles(storage_path() . '.pdf');
+        //     Storage::delete($files);
+        //     for ($i = 1; $i <= $pages; $i++) {
+        //         $image_name = str_pad($i, 4, '0', STR_PAD_LEFT);
+        //         $pdf->setPage($i)->saveImage(storage_path() . '/pdf', $image_name);
+        //     }
+        // }
+        // return back();
+
+        $text = $request->json()->all();
+        info($text);
+    }
+
+    public function save_text(Request $request) {
         set_time_limit(300);
-        $pdf_file = $request->file('pdf');
-        if ($pdf_file) {
-            $pdf = new Pdf($pdf_file);
-            $pages = $pdf->getNumberOfPages();
-            for ($i = 1; $i <= $pages; $i++) {
-                $image_name = str_pad($i, 4, '0', STR_PAD_LEFT);
-                $pdf->setPage($i)->saveImage(storage_path() . '/pdf', $image_name);
-            }
+        $text = $request->json()->all();
+        foreach ($text as $key => $value) {
+            $pdf_viewer = PdfViewer::create([
+                'text' => $value
+            ]);
         }
-        return back();
+        return response()->json([], 200);
+    }
+
+    public function search() {
+        $search = request('search');
+        $code = request('code');
+        if ($search) {
+            $search = strtoupper($search);
+            $found = PdfViewer::where('text', 'LIKE', '%'.$search.'%')->get();
+
+            foreach ($found as $value) {
+                $value->text = substr($value->text, strpos($value->text, $search), 20);
+            }
+            return response()->json([
+                'pages' => $found,
+            ], 200);
+        }
+
+        if ($code) {
+            $found = PdfViewer::where('text', 'LIKE', '%'.$code.'%')->select('id')->get();
+            return response()->json([
+                'pages' => $found,
+            ], 200);
+        }
+
+        return response()->json([
+            'pages' => [],
+        ], 200);
     }
 
     /**
